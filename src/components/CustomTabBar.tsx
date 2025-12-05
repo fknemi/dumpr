@@ -45,7 +45,7 @@ export default function CustomTabBar({ state, descriptors, navigation, icons }: 
                 flexDirection: "row",
                 justifyContent: "space-evenly",
                 alignItems: "center",
-                height: 70, // increased height
+                height: 70,
             }}
         >
             {filtered.map((route, i) => {
@@ -60,7 +60,7 @@ export default function CustomTabBar({ state, descriptors, navigation, icons }: 
                 // Animations
                 const width = anim[i].interpolate({
                     inputRange: [0, 1],
-                    outputRange: [58, 150], // bigger sizes, clean expansion
+                    outputRange: [58, 150],
                 });
 
                 const bgOpacity = anim[i].interpolate({
@@ -88,7 +88,7 @@ export default function CustomTabBar({ state, descriptors, navigation, icons }: 
                         key={route.key}
                         activeOpacity={0.85}
                         onPress={onPress}
-                        style={{ flexShrink: 0 }} // prevents cropped icons
+                        style={{ flexShrink: 0 }}
                     >
                         <Animated.View
                             style={{
@@ -98,14 +98,14 @@ export default function CustomTabBar({ state, descriptors, navigation, icons }: 
                                 borderRadius: 999,
                                 flexDirection: "row",
                                 alignItems: "center",
-                                justifyContent: "start",
+                                justifyContent: "flex-start",
                                 paddingHorizontal: 12,
                                 opacity: bgOpacity,
                                 transform: [{ scale }],
                                 overflow: "hidden",
                             }}
                         >
-                            <Ionicons name={iconName} size={30} color="#111" />
+                            <Ionicons name={iconName as any} size={30} color="#111" />
 
                             <Animated.Text
                                 numberOfLines={1}
