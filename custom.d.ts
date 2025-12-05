@@ -8,7 +8,7 @@ declare module "*.svg" {
 
 interface TabIcon {
     path: string;
-    icon: React.FC<SvgProps>;
+    icon: string;
 }
 
 

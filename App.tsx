@@ -18,10 +18,6 @@ import Services from './src/screens/Services';
 import Tickets from './src/screens/Tickets';
 import Ticket from './src/screens/Ticket';
 import WasteReport from './src/screens/WasteReport';
-import HomeIcon from './assets/icons/HomeIcon.svg';
-import UserIcon from './assets/icons/UserIcon.svg';
-import PhoneIcon from './assets/icons/PhoneIcon.svg';
-import CategoryIcon from './assets/icons/CategoryIcon.svg';
 
 
 export type RootStackParamList = {
@@ -45,19 +41,19 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<TabParamList>();
 const icons: TabIcon[] = [{
     path: "Home",
-    icon: HomeIcon
+    icon: "home"
 },
 {
     path: "Dashboard",
-    icon: CategoryIcon,
+    icon: "shapes",
 },
 {
     path: "Schedules",
-    icon: CategoryIcon,
+    icon: "calendar",
 },
 {
     path: "Profile",
-    icon: UserIcon,
+    icon: "person",
 },
 ]
 // Main Tab Navigator

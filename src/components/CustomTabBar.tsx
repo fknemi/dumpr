@@ -1,69 +1,126 @@
 import { View, Text, TouchableOpacity, Animated } from 'react-native';
-import { useEffect, useRef } from 'react';
+import { Easing } from 'react-native';
+import { useRef, useEffect } from 'react';
+import Ionicons from '@react-native-vector-icons/ionicons';
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 
-function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
-    const animatedValues = useRef(
-        state.routes.map(() => new Animated.Value(0))
-    ).current;
+interface TabIcon {
+    path: string;
+    icon: string;
+}
+
+interface CustomTabBarProps extends BottomTabBarProps {
+    icons: TabIcon[];
+}
+
+export default function CustomTabBar({ state, descriptors, navigation, icons }: CustomTabBarProps) {
+    const filtered = state.routes.filter(r => icons.some(ic => ic.path === r.name));
+    const anim = useRef(filtered.map(() => new Animated.Value(0))).current;
 
     useEffect(() => {
-        animatedValues.forEach((value, index) => {
-            Animated.spring(value, {
-                toValue: state.index === index ? 1 : 0,
+        filtered.forEach((route, i) => {
+            const originalIndex = state.routes.findIndex(r => r.key === route.key);
+            const focused = state.index === originalIndex;
+
+            Animated.timing(anim[i], {
+                toValue: focused ? 1 : 0,
+                duration: 250,
+                easing: Easing.out(Easing.ease),
                 useNativeDriver: false,
-                friction: 8,
             }).start();
         });
-    }, [state.index, animatedValues]);
+    }, [state.index]);
 
     return (
-        <View className="absolute bottom-5 left-5 right-5 flex-row bg-white rounded-full px-3 py-3 shadow-lg justify-around">
-            {state.routes.map((route, index) => {
+        <View
+            style={{
+                position: "absolute",
+                bottom: 12,
+                left: 18,
+                right: 18,
+                paddingVertical: 12,
+                paddingHorizontal: 10,
+                borderRadius: 999,
+                backgroundColor: "#22C55E",
+                flexDirection: "row",
+                justifyContent: "space-evenly",
+                alignItems: "center",
+                height: 70, // increased height
+            }}
+        >
+            {filtered.map((route, i) => {
+                const originalIndex = state.routes.findIndex(r => r.key === route.key);
+                const focused = state.index === originalIndex;
+
                 const { options } = descriptors[route.key];
-                const label =
-                    (options.tabBarLabel !== undefined
-                        ? typeof options.tabBarLabel === 'string'
-                            ? options.tabBarLabel
-                            : String(options.tabBarLabel)
-                        : options.title !== undefined
-                        ? options.title
-                        : route.name) as string;
+                const label = (options.tabBarLabel ?? options.title ?? route.name) as string;
 
-                const isFocused = state.index === index;
+                const iconName = icons.find(ic => ic.path === route.name)?.icon ?? "help-circle-outline";
 
-                const onPress = () => {
-                    const event = navigation.emit({
-                        type: 'tabPress',
-                        target: route.key,
-                        canPreventDefault: true,
-                    });
-
-                    if (!isFocused && !event.defaultPrevented) {
-                        navigation.navigate(route.name);
-                    }
-                };
-
-                const backgroundColor = animatedValues[index].interpolate({
+                // Animations
+                const width = anim[i].interpolate({
                     inputRange: [0, 1],
-                    outputRange: ['rgba(229, 231, 235, 0)', 'rgba(34, 197, 94, 1)'],
+                    outputRange: [58, 150], // bigger sizes, clean expansion
                 });
 
-                const textColor = isFocused ? '#ffffff' : '#6b7280';
+                const bgOpacity = anim[i].interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [0.85, 1],
+                });
+
+                const scale = anim[i].interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [1, 1.1],
+                });
+
+                const labelOpacity = anim[i];
+                const labelTranslate = anim[i].interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [10, 0],
+                });
+
+                const onPress = () => {
+                    if (!focused) navigation.navigate(route.name);
+                };
 
                 return (
                     <TouchableOpacity
                         key={route.key}
+                        activeOpacity={0.85}
                         onPress={onPress}
-                        activeOpacity={0.7}
+                        style={{ flexShrink: 0 }} // prevents cropped icons
                     >
                         <Animated.View
-                            style={{ backgroundColor }}
-                            className="px-4 py-2 rounded-full flex-row items-center"
+                            style={{
+                                width,
+                                height: 52,
+                                backgroundColor: "#fff",
+                                borderRadius: 999,
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "start",
+                                paddingHorizontal: 12,
+                                opacity: bgOpacity,
+                                transform: [{ scale }],
+                                overflow: "hidden",
+                            }}
                         >
-                            <Text style={{ color: textColor }} className="text-sm font-semibold">
+                            <Ionicons name={iconName} size={30} color="#111" />
+
+                            <Animated.Text
+                                numberOfLines={1}
+                                style={{
+                                    marginLeft: 8,
+                                    opacity: labelOpacity,
+                                    transform: [{ translateX: labelTranslate }],
+                                    color: "#111",
+                                    fontSize: 18,
+                                    fontWeight: "600",
+                                    display: focused ? "flex" : "none",
+                                }}
+                            >
                                 {label}
-                            </Text>
+                            </Animated.Text>
                         </Animated.View>
                     </TouchableOpacity>
                 );
@@ -72,4 +129,3 @@ function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
     );
 }
 
-export default CustomTabBar;
