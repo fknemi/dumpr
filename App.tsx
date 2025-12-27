@@ -24,7 +24,6 @@ import Ticket from './src/screens/Ticket';
 import WasteReport from './src/screens/WasteReport';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-
 export type RootStackParamList = {
   MainTabs: undefined;
   Login: undefined;
@@ -69,6 +68,7 @@ function MainTabs() {
         tabBar={props => <CustomTabBar {...props} icons={icons} />}
         screenOptions={{
           headerShown: false,
+          sceneStyle: { backgroundColor: 'white' },
         }}
       >
         <Tab.Screen
@@ -118,7 +118,7 @@ export default function App() {
         <GestureHandlerRootView style={{ flex: 1 }}>
           <NavigationContainer>
             <Stack.Navigator
-              initialRouteName="Login"
+              initialRouteName="MainTabs"
               screenOptions={{
                 headerShown: true,
                 header: props => (
