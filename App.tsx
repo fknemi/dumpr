@@ -23,7 +23,7 @@ import Tickets from './src/screens/Tickets';
 import Ticket from './src/screens/Ticket';
 import WasteReport from './src/screens/WasteReport';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-
+import useLocationStore from './src/stores/useLocationStore.tsx';
 export type RootStackParamList = {
   MainTabs: undefined;
   Login: undefined;
@@ -61,6 +61,7 @@ const icons: TabIcon[] = [
     icon: 'person',
   },
 ];
+
 function MainTabs() {
   return (
     <>
@@ -86,13 +87,6 @@ function MainTabs() {
           }}
         />
         <Tab.Screen
-          name="Services"
-          component={Services}
-          options={{
-            tabBarLabel: 'Services',
-          }}
-        />
-        <Tab.Screen
           name="Schedules"
           component={Schedules}
           options={{
@@ -112,6 +106,8 @@ function MainTabs() {
 }
 
 export default function App() {
+  const city = useLocationStore(state => state.city);
+
   return (
     <>
       <SafeAreaProvider>
@@ -125,7 +121,7 @@ export default function App() {
                   <Navbar
                     {...props}
                     name="Test"
-                    location="Location"
+                    location={city}
                     showBackButton={true}
                     showLocation={true}
                   />
@@ -141,6 +137,7 @@ export default function App() {
               <Stack.Screen name="Campaign" component={Campaign} />
               <Stack.Screen name="Schedule" component={Schedule} />
               <Stack.Screen name="Ticket" component={Ticket} />
+              <Stack.Screen name="Services" component={Services} />
             </Stack.Navigator>
           </NavigationContainer>
         </GestureHandlerRootView>

@@ -12,6 +12,7 @@ function FeatureCard({
   iconPath,
   gradientPath,
   color,
+  offsetLeft
 }: FeatureCardProps) {
   return (
     <View
@@ -32,7 +33,7 @@ function FeatureCard({
       </View>
       <View className="relative">
         <Image className="absolute bottom-[-20%]" source={gradientPath} />
-        <Image className="absolute bottom-[5%] left-24" source={iconPath} />
+        <Image className={`absolute bottom-[5%] ${offsetLeft || "left-24"}`}  source={iconPath} />
       </View>
     </View>
   );

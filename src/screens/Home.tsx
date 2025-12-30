@@ -12,7 +12,7 @@ import Ionicons from '@react-native-vector-icons/ionicons';
 import CampaignCard from '../components/CampaignCard.tsx';
 
 import FeatureCard from '../components/FeatureCard.tsx';
-function Home() {
+function Home({ navigation }: { navigation: LoginScreenNavigationProp }) {
   const features = [
     {
       title: 'Weekly Garbage Collection',
@@ -60,6 +60,12 @@ function Home() {
       }}
     >
       <View className="flex flex-col items-center justify-center gap-4">
+        <CategoryHeading
+          title={'Our Services'}
+          width={'w-[85vw]'}
+          onViewMore={() => navigation.navigate("Services")}
+        />
+
         {features.map(feature => {
           return <FeatureCard key={feature.title} {...feature} />;
         })}

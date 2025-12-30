@@ -1,7 +1,15 @@
-import { View, Text, TouchableOpacity, StatusBar } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StatusBar,
+  Pressable,
+} from 'react-native';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import useLocation from '../hooks/useLocation';
+
 interface NavbarProps {
   navigation?: NativeStackHeaderProps['navigation'];
   name?: string | null;
@@ -17,6 +25,7 @@ function Navbar({
   showLocation = true,
   location = 'Location',
 }: NavbarProps) {
+  const { getCurrentLocation } = useLocation();
   return (
     <>
       <StatusBar barStyle="dark-content" backgroundColor="white" />
@@ -39,12 +48,14 @@ function Navbar({
             )}
           </View>
 
-          {/* Right Side */}
           {showLocation && (
-            <TouchableOpacity className="flex-row items-center gap-2 px-4 py-2 border border-gray-300 rounded-full">
-              <Text className="text-2xl font-medium">{location}</Text>
+            <Pressable
+              className="flex-row items-center gap-2 px-4 py-2 border border-gray-300 rounded-full"
+              onPress={() => getCurrentLocation()}
+            >
+              <Text className="text-2xl font-medium">{location || '?'}</Text>
               <Ionicons name="location-sharp" size={24} color="#111" />
-            </TouchableOpacity>
+            </Pressable>
           )}
         </View>
       </SafeAreaView>

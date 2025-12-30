@@ -11,12 +11,14 @@ export interface FeatureCardParams {
   iconPath: string;
   gradientPath: string;
   color: string;
+  offsetLeft?: string;
 }
 
 export interface CategoryHeadingParams {
   title: string;
   width: string;
   onViewMore: () => void;
+  hideViewMore?: boolean;
 }
 
 export interface CampaignCardParams {
