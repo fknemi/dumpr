@@ -1,5 +1,5 @@
 import { View, Text, Image, Pressable } from 'react-native';
-import { FeatureCardParams } from '../../types/index';
+import { FeatureCardParams } from '@/types/index';
 
 interface FeatureCardProps {
   feature: FeatureCardParams;

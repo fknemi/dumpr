@@ -7,9 +7,9 @@ import {
   ScrollView,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import CategoryHeading from '../components/CategoryHeading.tsx';
+import CategoryHeading from '@/components/CategoryHeading.tsx';
 import Ionicons from '@react-native-vector-icons/ionicons';
-import CampaignCard from '../components/CampaignCard.tsx';
+import CampaignCard from '@/components/CampaignCard.tsx';
 
 import FeatureCard from '../components/FeatureCard.tsx';
 function Home({ navigation }: { navigation: LoginScreenNavigationProp }) {
@@ -63,7 +63,7 @@ function Home({ navigation }: { navigation: LoginScreenNavigationProp }) {
         <CategoryHeading
           title={'Our Services'}
           width={'w-[85vw]'}
-          onViewMore={() => navigation.navigate("Services")}
+          onViewMore={() => navigation.navigate('Services')}
         />
 
         {features.map(feature => {

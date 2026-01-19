@@ -1,5 +1,5 @@
 import { View, Text, Pressable } from 'react-native';
-import { CategoryHeadingParams } from '../../types/index.ts';
+import { CategoryHeadingParams } from '@/types/index.ts';
 function CategoryHeading({
   title,
   width,

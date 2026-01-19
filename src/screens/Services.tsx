@@ -7,8 +7,8 @@ import {
   ScrollView,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import CategoryHeading from '../components/CategoryHeading.tsx';
-import FeatureCard from '../components/FeatureCard.tsx';
+import CategoryHeading from '@/components/CategoryHeading.tsx';
+import FeatureCard from '@/components/FeatureCard.tsx';
 import Ionicons from '@react-native-vector-icons/ionicons';
 
 function Services() {

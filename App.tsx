@@ -5,44 +5,30 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Home from './src/screens/Home';
-import CustomTabBar from './src/components/CustomTabBar';
-import About from './src/screens/About';
-import Campaigns from './src/screens/Campaigns';
-import Campaign from './src/screens/Campaign';
-import Dashboard from './src/screens/Dashboard';
-import Login from './src/screens/Login';
-import ProfilePage from './src/screens/ProfilePage';
-import RecyclingInformation from './src/screens/RecyclingInformation';
-import Registration from './src/screens/Registration';
-import Navbar from './src/components/Navbar';
-import Schedules from './src/screens/Schedules';
-import Schedule from './src/screens/Schedule';
-import Services from './src/screens/Services';
-import Tickets from './src/screens/Tickets';
-import Ticket from './src/screens/Ticket';
-import WasteReport from './src/screens/WasteReport';
+import Home from '@/screens/Home';
+import CustomTabBar from '@/components/CustomTabBar';
+import About from '@/screens/About';
+import Campaigns from '@/screens/Campaigns';
+import Campaign from '@/screens/Campaign';
+import Dashboard from '@/screens/Dashboard';
+import Login from '@/screens/Login';
+import ProfilePage from '@/screens/ProfilePage';
+import RecyclingInformation from '@/screens/RecyclingInformation';
+import Registration from '@/screens/Registration';
+import Navbar from '@/components/Navbar';
+import Schedules from '@/screens/Schedules';
+import Schedule from '@/screens/Schedule';
+import Services from '@/screens/Services';
+import Tickets from '@/screens/Tickets';
+import Ticket from '@/screens/Ticket';
+import WasteReport from '@/screens/WasteReport';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import useLocationStore from './src/stores/useLocationStore.tsx';
-export type RootStackParamList = {
-  MainTabs: undefined;
-  Login: undefined;
-  Registration: undefined;
-  Campaign: { id: string };
-  Schedule: { id: string };
-  Ticket: { id: string };
-};
-
-export type TabParamList = {
-  Home: undefined;
-  Dashboard: undefined;
-  Services: undefined;
-  Schedules: undefined;
-  Profile: undefined;
-};
+import useLocationStore from '@/stores/useLocationStore.tsx';
+import { RootStackParamList, TabParamList } from '@/types/index';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<TabParamList>();
+
 const icons: TabIcon[] = [
   {
     path: 'Home',

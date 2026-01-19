@@ -28,3 +28,20 @@ export interface CampaignCardParams {
   icon: string;
   color: string;
 }
+
+export type RootStackParamList = {
+  MainTabs: undefined;
+  Login: undefined;
+  Registration: undefined;
+  Campaign: { id: string };
+  Schedule: { id: string };
+  Ticket: { id: string };
+};
+
+export type TabParamList = {
+  Home: undefined;
+  Dashboard: undefined;
+  Services: undefined;
+  Schedules: undefined;
+  Profile: undefined;
+};

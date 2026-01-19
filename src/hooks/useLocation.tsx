@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Platform, PermissionsAndroid } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
-import useLocationStore from '../stores/useLocationStore';
+import useLocationStore from '@/stores/useLocationStore';
 
 const useLocation = () => {
   const [loading, setLoading] = useState(false);

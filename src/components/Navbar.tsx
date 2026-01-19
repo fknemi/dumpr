@@ -8,7 +8,7 @@ import {
 import Ionicons from '@react-native-vector-icons/ionicons';
 import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import useLocation from '../hooks/useLocation';
+import useLocation from '@/hooks/useLocation';
 
 interface NavbarProps {
   navigation?: NativeStackHeaderProps['navigation'];

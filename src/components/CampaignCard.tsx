@@ -1,7 +1,7 @@
 import { View, Text, Linking, Pressable } from 'react-native';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import LinearGradient from 'react-native-linear-gradient';
-import { CampaignCardParams } from '../../types/index.ts';
+import { CampaignCardParams } from '@/types/index.ts';
 const openLink = async url => {
   console.log('Attempting to open:', url);
   try {
