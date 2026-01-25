@@ -1,12 +1,21 @@
+// Global Styles
 import './global.css';
+
+// React Imports
 import { useEffect } from 'react';
+
+// React Native Imports
 import { StatusBar } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+
+// Navigation Imports
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+// Screen Components
 import Home from '@/screens/Home';
-import CustomTabBar from '@/components/CustomTabBar';
 import About from '@/screens/About';
 import Campaigns from '@/screens/Campaigns';
 import Campaign from '@/screens/Campaign';
@@ -15,20 +24,28 @@ import Login from '@/screens/Login';
 import ProfilePage from '@/screens/ProfilePage';
 import RecyclingInformation from '@/screens/RecyclingInformation';
 import Registration from '@/screens/Registration';
-import Navbar from '@/components/Navbar';
 import Schedules from '@/screens/Schedules';
 import Schedule from '@/screens/Schedule';
 import Services from '@/screens/Services';
 import Tickets from '@/screens/Tickets';
 import Ticket from '@/screens/Ticket';
 import WasteReport from '@/screens/WasteReport';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+
+// Custom Components
+import Navbar from '@/components/Navbar';
+import CustomTabBar from '@/components/CustomTabBar';
+
+// Store Imports
 import useLocationStore from '@/stores/useLocationStore.tsx';
+
+// Type Imports
 import { RootStackParamList, TabParamList } from '@/types/index';
 
+// Navigator Initialization
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<TabParamList>();
 
+// Tab Icons Configuration
 const icons: TabIcon[] = [
   {
     path: 'Home',
@@ -48,6 +65,7 @@ const icons: TabIcon[] = [
   },
 ];
 
+// Protected Routes (Tab Navigator)
 function MainTabs() {
   return (
     <>
@@ -91,6 +109,30 @@ function MainTabs() {
   );
 }
 
+// Public Routes Component
+function PublicRoutes() {
+  return (
+    <>
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Registration" component={Registration} />
+    </>
+  );
+}
+
+// Application Routes Component
+function AppRoutes() {
+  return (
+    <>
+      <Stack.Screen name="MainTabs" component={MainTabs} />
+      <Stack.Screen name="Campaign" component={Campaign} />
+      <Stack.Screen name="Schedule" component={Schedule} />
+      <Stack.Screen name="Ticket" component={Ticket} />
+      <Stack.Screen name="Services" component={Services} />
+    </>
+  );
+}
+
+// Main Application Component
 export default function App() {
   const city = useLocationStore(state => state.city);
 
@@ -115,15 +157,11 @@ export default function App() {
                 contentStyle: { backgroundColor: '#FFFFFF' },
               }}
             >
-              <Stack.Screen name="Login" component={Login} />
-              <Stack.Screen name="Registration" component={Registration} />
-
-              <Stack.Screen name="MainTabs" component={MainTabs} />
-
-              <Stack.Screen name="Campaign" component={Campaign} />
-              <Stack.Screen name="Schedule" component={Schedule} />
-              <Stack.Screen name="Ticket" component={Ticket} />
-              <Stack.Screen name="Services" component={Services} />
+              {/* Public Routes */}
+              <PublicRoutes />
+              
+              {/* Protected/Application Routes */}
+              <AppRoutes />
             </Stack.Navigator>
           </NavigationContainer>
         </GestureHandlerRootView>

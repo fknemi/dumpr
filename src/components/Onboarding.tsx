@@ -1,10 +1,7 @@
-import { View, Text } from 'react-native'
+import { View } from 'react-native';
 
-const Onboarding = () => {
-  return (
-    <View>
-    </View>
-  )
+function Onboarding() {
+  return <View></View>;
 }
 
-export default Onboarding
+export default Onboarding;
