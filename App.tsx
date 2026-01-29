@@ -1,4 +1,3 @@
-// Global Styles
 import './global.css';
 
 // React Imports
@@ -131,7 +130,7 @@ function AppRoutes() {
     </>
   );
 }
-
+// Main Application Component
 // Main Application Component
 export default function App() {
   const city = useLocationStore(state => state.city);
@@ -158,10 +157,16 @@ export default function App() {
               }}
             >
               {/* Public Routes */}
-              <PublicRoutes />
-              
+              <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen name="Registration" component={Registration} />
+              <Stack.Screen name="Profile" component={ProfilePage} />
+
               {/* Protected/Application Routes */}
-              <AppRoutes />
+              <Stack.Screen name="MainTabs" component={MainTabs} />
+              <Stack.Screen name="Campaign" component={Campaign} />
+              <Stack.Screen name="Schedule" component={Schedule} />
+              <Stack.Screen name="Ticket" component={Ticket} />
+              <Stack.Screen name="Services" component={Services} />
             </Stack.Navigator>
           </NavigationContainer>
         </GestureHandlerRootView>

@@ -4,6 +4,46 @@
     {
       "path": "node_modules/@react-native-vector-icons/ionicons/fonts/Ionicons.ttf",
       "sha1": "3a656ee69b64ccb1e57f1721f7659b50c1fb56ef"
+    },
+    {
+      "path": "assets/fonts/rethink-sans-v7-latin-regular.ttf",
+      "sha1": "6a84ee317a6d40f361e48432f133033c8773a8af"
+    },
+    {
+      "path": "assets/fonts/rethink-sans-v7-latin-italic.ttf",
+      "sha1": "c0b2c11a99e303322643ce0c48e77ae2d33b9b75"
+    },
+    {
+      "path": "assets/fonts/rethink-sans-v7-latin-800italic.ttf",
+      "sha1": "f35f1d8d053a107ea44fa0d34e31cb5c8fcef0aa"
+    },
+    {
+      "path": "assets/fonts/rethink-sans-v7-latin-800.ttf",
+      "sha1": "4a450d6c5ac3ea31ffbe417f3648a50cdd2563a6"
+    },
+    {
+      "path": "assets/fonts/rethink-sans-v7-latin-700italic.ttf",
+      "sha1": "cddf9cfa90c81418c1035f683b807842548fb0f1"
+    },
+    {
+      "path": "assets/fonts/rethink-sans-v7-latin-700.ttf",
+      "sha1": "c7e4867a582787bfd9fae85bd6254e37737cf462"
+    },
+    {
+      "path": "assets/fonts/rethink-sans-v7-latin-600italic.ttf",
+      "sha1": "8bcda332fa889f1fb3fc84307c52150dac28d438"
+    },
+    {
+      "path": "assets/fonts/rethink-sans-v7-latin-600.ttf",
+      "sha1": "2f8b833c83758a630fa097d090b6432808a0d3ea"
+    },
+    {
+      "path": "assets/fonts/rethink-sans-v7-latin-500italic.ttf",
+      "sha1": "4df82a57f856b0ee83dd517fbfe02ce35ae07662"
+    },
+    {
+      "path": "assets/fonts/rethink-sans-v7-latin-500.ttf",
+      "sha1": "da916c5107ab37ff52a8c19fd850bde0926f1470"
     }
   ]
 }
