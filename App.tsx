@@ -36,6 +36,7 @@ import CustomTabBar from '@/components/CustomTabBar';
 
 // Store Imports
 import useLocationStore from '@/stores/useLocationStore.tsx';
+import useAuthStore from '@/stores/useAuthStore';
 
 // Type Imports
 import { RootStackParamList, TabParamList } from '@/types/index';
@@ -66,111 +67,170 @@ const icons: TabIcon[] = [
 
 // Protected Routes (Tab Navigator)
 function MainTabs() {
-  return (
-    <>
-      <Tab.Navigator
-        tabBar={props => <CustomTabBar {...props} icons={icons} />}
-        screenOptions={{
-          headerShown: false,
-          sceneStyle: { backgroundColor: 'white' },
-        }}
-      >
-        <Tab.Screen
-          name="Home"
-          component={Home}
-          options={{
-            tabBarLabel: 'Home',
-          }}
-        />
-        <Tab.Screen
-          name="Dashboard"
-          component={Dashboard}
-          options={{
-            tabBarLabel: 'Dashboard',
-          }}
-        />
-        <Tab.Screen
-          name="Schedules"
-          component={Schedules}
-          options={{
-            tabBarLabel: 'Schedules',
-          }}
-        />
-        <Tab.Screen
-          name="Profile"
-          component={ProfilePage}
-          options={{
-            tabBarLabel: 'Profile',
-          }}
-        />
-      </Tab.Navigator>
-    </>
-  );
-}
-
-// Public Routes Component
-function PublicRoutes() {
-  return (
-    <>
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Registration" component={Registration} />
-    </>
-  );
-}
-
-// Application Routes Component
-function AppRoutes() {
-  return (
-    <>
-      <Stack.Screen name="MainTabs" component={MainTabs} />
-      <Stack.Screen name="Campaign" component={Campaign} />
-      <Stack.Screen name="Schedule" component={Schedule} />
-      <Stack.Screen name="Ticket" component={Ticket} />
-      <Stack.Screen name="Services" component={Services} />
-    </>
-  );
-}
-// Main Application Component
-// Main Application Component
-export default function App() {
   const city = useLocationStore(state => state.city);
 
   return (
-    <>
-      <SafeAreaProvider>
-        <GestureHandlerRootView style={{ flex: 1 }}>
-          <NavigationContainer>
-            <Stack.Navigator
-              initialRouteName="MainTabs"
-              screenOptions={{
-                headerShown: true,
-                header: props => (
-                  <Navbar
-                    {...props}
-                    name="Test"
-                    location={city}
-                    showBackButton={true}
-                    showLocation={true}
-                  />
-                ),
-                contentStyle: { backgroundColor: '#FFFFFF' },
-              }}
-            >
-              {/* Public Routes */}
-              <Stack.Screen name="Login" component={Login} />
-              <Stack.Screen name="Registration" component={Registration} />
-              <Stack.Screen name="Profile" component={ProfilePage} />
+    <Tab.Navigator
+      tabBar={props => <CustomTabBar {...props} icons={icons} />}
+      screenOptions={{
+        headerShown: true,
+        header: props => (
+          <Navbar
+            {...props}
+            name={props.route.name}
+            location={city}
+            showBackButton={false}
+            showLocation={true}
+          />
+        ),
+        sceneStyle: { backgroundColor: 'white' },
+      }}
+    >
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarLabel: 'Home',
+        }}
+      />
+      <Tab.Screen
+        name="Dashboard"
+        component={Dashboard}
+        options={{
+          tabBarLabel: 'Dashboard',
+        }}
+      />
+      <Tab.Screen
+        name="Schedules"
+        component={Schedules}
+        options={{
+          tabBarLabel: 'Schedules',
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={ProfilePage}
+        options={{
+          tabBarLabel: 'Profile',
+        }}
+      />
+    </Tab.Navigator>
+  );
+}
 
-              {/* Protected/Application Routes */}
-              <Stack.Screen name="MainTabs" component={MainTabs} />
-              <Stack.Screen name="Campaign" component={Campaign} />
-              <Stack.Screen name="Schedule" component={Schedule} />
-              <Stack.Screen name="Ticket" component={Ticket} />
-              <Stack.Screen name="Services" component={Services} />
-            </Stack.Navigator>
-          </NavigationContainer>
-        </GestureHandlerRootView>
-      </SafeAreaProvider>
-    </>
+// Main Application Component
+export default function App() {
+  const city = useLocationStore(state => state.city);
+  const isAuthenticated = useAuthStore(state => state.isAuthenticated);
+
+  return (
+    <SafeAreaProvider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="Login"
+            screenOptions={{
+              contentStyle: { backgroundColor: '#FFFFFF' },
+            }}
+          >
+            {!isAuthenticated ? (
+              // Authentication Stack
+              <>
+                <Stack.Screen
+                  name="Login"
+                  component={Login}
+                  options={{
+                    headerShown: false,
+                    animationTypeForReplace: 'push',
+                  }}
+                />
+                <Stack.Screen
+                  name="Registration"
+                  component={Registration}
+                  options={{
+                    headerShown: false,
+                  }}
+                />
+              </>
+            ) : (
+              // Authenticated Stack
+              <>
+                <Stack.Screen
+                  name="MainTabs"
+                  component={MainTabs}
+                  options={{
+                    headerShown: false,
+                  }}
+                />
+                <Stack.Screen
+                  name="Campaign"
+                  component={Campaign}
+                  options={{
+                    headerShown: true,
+                    header: props => (
+                      <Navbar
+                        {...props}
+                        name="Campaign"
+                        location={city}
+                        showBackButton={true}
+                        showLocation={true}
+                      />
+                    ),
+                  }}
+                />
+                <Stack.Screen
+                  name="Schedule"
+                  component={Schedule}
+                  options={{
+                    headerShown: true,
+                    header: props => (
+                      <Navbar
+                        {...props}
+                        name="Schedule"
+                        location={city}
+                        showBackButton={true}
+                        showLocation={true}
+                      />
+                    ),
+                  }}
+                />
+                <Stack.Screen
+                  name="Ticket"
+                  component={Ticket}
+                  options={{
+                    headerShown: true,
+                    header: props => (
+                      <Navbar
+                        {...props}
+                        name="Ticket"
+                        location={city}
+                        showBackButton={true}
+                        showLocation={true}
+                      />
+                    ),
+                  }}
+                />
+                <Stack.Screen
+                  name="Services"
+                  component={Services}
+                  options={{
+                    headerShown: true,
+                    header: props => (
+                      <Navbar
+                        {...props}
+                        name="Services"
+                        location={city}
+                        showBackButton={true}
+                        showLocation={true}
+                      />
+                    ),
+                  }}
+                />
+              </>
+            )}
+          </Stack.Navigator>
+        </NavigationContainer>
+      </GestureHandlerRootView>
+    </SafeAreaProvider>
   );
 }

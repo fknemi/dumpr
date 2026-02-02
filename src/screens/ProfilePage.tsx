@@ -1,15 +1,17 @@
 import { View, Text, Image, Pressable } from 'react-native';
 import Ionicons from '@react-native-vector-icons/ionicons';
+import useAuthStore from '@/stores/useAuthStore';
 
 interface ProfilePageProps {
   navigation?: NativeStackHeaderProps['navigation'];
 }
 
 function ProfilePage({ navigation }: ProfilePageProps) {
-  const isLoggedOut = false;
+  const isAuthenticated = useAuthStore(state => state.isAuthenticated);
+
   return (
     <View>
-      {isLoggedOut ? (
+      {isAuthenticated ? (
         <></>
       ) : (
         <View className="flex flex-col w-full h-[60vh] items-center justify-center gap-24">
