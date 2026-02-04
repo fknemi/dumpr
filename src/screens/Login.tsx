@@ -24,11 +24,12 @@ import CountryPicker, {
   CountryCode,
 } from 'react-native-country-picker-modal';
 import useAuthStore from '@/stores/useAuthStore';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+
 type LoginNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   'Login'
 >;
-
 interface LoginScreenProps {
   navigation: LoginNavigationProp;
   route: RouteProp<RootStackParamList, 'Login'>;
@@ -45,7 +46,6 @@ function Login({ navigation }: LoginScreenProps) {
 
   const isAuthenticated = useAuthStore(state => state.isAuthenticated);
   const setAuthStatus = useAuthStore(state => state.setAuthStatus);
-
   const handleNext = () => {
     if (isPhoneMode) {
       if (inputValue.length >= 10) {
@@ -74,6 +74,29 @@ function Login({ navigation }: LoginScreenProps) {
     setAuthStatus(true);
     navigation.navigate('MainTabs');
   };
+
+  const handleGoogleLogin = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      console.log('User Info:', userInfo);
+      setAuthStatus(true);
+      navigation.navigate('MainTabs');
+    } catch (error: any) {
+      console.error('Google Sign-In Error:', error);
+      Alert.alert(
+        'Error',
+        `${error?.code || 'Unknown'}: ${error?.message || 'Failed to sign in with Google'}`,
+      );
+    }
+  };
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId:
+        '119264150641-2cs6kplfba1ag8d0vsdefp6g4s37s2la.apps.googleusercontent.com',
+      scopes: ['profile', 'email'],
+    });
+  }, []);
 
   return (
     <KeyboardAvoidingView
@@ -162,10 +185,7 @@ function Login({ navigation }: LoginScreenProps) {
               </Text>
             </Pressable>
             <View className="h-8 w-px bg-gray-300" />
-            <Pressable
-              onPress={() => console.log('Google login')}
-              android_ripple={null}
-            >
+            <Pressable onPress={handleGoogleLogin} android_ripple={null}>
               <Text className="color-[#5F3FFD] text-lg font-semibold">
                 via Google
               </Text>
