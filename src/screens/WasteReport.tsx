@@ -1,10 +1,7 @@
-import { View, Text } from 'react-native'
+import { View, Text } from 'react-native';
 
 function WasteReport() {
-    return (
-        <View>
-        </View>
-    )
+  return <View></View>;
 }
 
-export default WasteReport
+export default WasteReport;

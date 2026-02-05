@@ -19,8 +19,6 @@ const config = {
     },
 };
 
-// First merge the SVG config with default config
 const mergedConfig = mergeConfig(defaultConfig, config);
 
-// Then apply NativeWind on top
 module.exports = withNativeWind(mergedConfig, { input: './global.css' });

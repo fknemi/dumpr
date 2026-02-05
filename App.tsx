@@ -69,7 +69,8 @@ const icons: TabIcon[] = [
 // Protected Routes (Tab Navigator)
 function MainTabs() {
   const city = useLocationStore(state => state.city);
-  const username = useUserStore(state => state.username);
+  const user = useUserStore(state => state.user);
+  const username = user?.username || '';
 
   return (
     <Tab.Navigator
@@ -79,7 +80,7 @@ function MainTabs() {
         header: props => (
           <Navbar
             {...props}
-            name={username || ''}
+            name={username}
             location={city}
             showBackButton={false}
             showLocation={true}
@@ -124,7 +125,8 @@ function MainTabs() {
 export default function App() {
   const city = useLocationStore(state => state.city);
   const isAuthenticated = useAuthStore(state => state.isAuthenticated);
-  const username = useUserStore(state => state.username);
+  const user = useUserStore(state => state.user);
+  const username = user?.name || '';
 
   return (
     <SafeAreaProvider>
@@ -222,7 +224,7 @@ export default function App() {
                     header: props => (
                       <Navbar
                         {...props}
-                        name={username || ''}
+                        name={username}
                         location={city}
                         showBackButton={true}
                         showLocation={false}

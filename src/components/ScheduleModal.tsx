@@ -1,14 +1,20 @@
-import { View, Text, Modal, Pressable, TouchableOpacity, ScrollView } from 'react-native';
+import {
+  View,
+  Text,
+  Modal,
+  Pressable,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import Ionicons from '@react-native-vector-icons/ionicons';
 
 interface ScheduleModalProps {
   visible: boolean;
   onClose: () => void;
-  data: Array<{id: number, day: string, time?: string, type?: string}>
+  data: Array<{ id: number; day: string; time?: string; type?: string }>;
 }
 
 function ScheduleModal({ visible, onClose, data }: ScheduleModalProps) {
-console.log(data)
   return (
     <Modal
       visible={visible}
@@ -16,18 +22,18 @@ console.log(data)
       animationType="fade"
       onRequestClose={onClose}
     >
-      {/* Backdrop */}
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        keyboardShouldPersistTaps="handled"
+      >
         <Pressable
           className="flex-1 bg-black/50 justify-center items-center min-h-full"
           onPress={onClose}
         >
-          {/* Modal Content */}
           <Pressable
             className="bg-white rounded-2xl p-6 w-[100vw] h-[60vh] max-w-md my-8"
-            onPress={(e) => e.stopPropagation()}
+            onPress={e => e.stopPropagation()}
           >
-            {/* Header */}
             <View className="flex flex-row justify-between items-center mb-4">
               <Text className="text-2xl font-bold text-black">Schedules</Text>
               <TouchableOpacity onPress={onClose}>
@@ -35,11 +41,10 @@ console.log(data)
               </TouchableOpacity>
             </View>
 
-            {/* Schedule List */}
             <ScrollView className="h-full" showsVerticalScrollIndicator={false}>
               {data && data.length > 0 ? (
                 <View className="gap-3">
-                  {data.map((schedule) => (
+                  {data.map(schedule => (
                     <View
                       key={schedule.id}
                       className="bg-gray-50 p-4 rounded-lg border border-gray-200"
@@ -56,7 +61,9 @@ console.log(data)
                       </View>
                       {schedule.type && (
                         <View className="flex flex-row items-center gap-2">
-                          <Text className="text-sm text-gray-600">{schedule.type}</Text>
+                          <Text className="text-sm text-gray-600">
+                            {schedule.type}
+                          </Text>
                         </View>
                       )}
                     </View>
@@ -79,4 +86,3 @@ console.log(data)
 }
 
 export default ScheduleModal;
-

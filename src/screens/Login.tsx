@@ -24,6 +24,7 @@ import CountryPicker, {
   CountryCode,
 } from 'react-native-country-picker-modal';
 import useAuthStore from '@/stores/useAuthStore';
+import useUserStore from '@/stores/useUserStore';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 type LoginNavigationProp = NativeStackNavigationProp<
@@ -46,6 +47,7 @@ function Login({ navigation }: LoginScreenProps) {
 
   const isAuthenticated = useAuthStore(state => state.isAuthenticated);
   const setAuthStatus = useAuthStore(state => state.setAuthStatus);
+  const setUser = useUserStore(state => state.setUser);
   const handleNext = () => {
     if (isPhoneMode) {
       if (inputValue.length >= 10) {
@@ -74,21 +76,32 @@ function Login({ navigation }: LoginScreenProps) {
     setAuthStatus(true);
     navigation.navigate('MainTabs');
   };
+  const user = useUserStore(state => state.user);
+  const uid = user?.uid; // Use optional chaining
+
+  useEffect(() => {
+    if (user) {
+      setAuthStatus(true);
+      navigation.navigate('MainTabs');
+    }
+  }, []);
 
   const handleGoogleLogin = async () => {
     try {
       await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
-      console.log('User Info:', userInfo);
+      const userCredentials = await GoogleSignin.signIn();
+      setUser({
+        uid: userCredentials.data.user.id,
+        email: userCredentials.data.user.email,
+        username: userCredentials.data.user.name || '',
+        displayName: userCredentials.data.user.name || '',
+        photoURL: userCredentials.data.user.photo || '',
+        providerId: 'google.com',
+        createdAt: Date.now(),
+      });
       setAuthStatus(true);
       navigation.navigate('MainTabs');
-    } catch (error: any) {
-      console.error('Google Sign-In Error:', error);
-      Alert.alert(
-        'Error',
-        `${error?.code || 'Unknown'}: ${error?.message || 'Failed to sign in with Google'}`,
-      );
-    }
+    } catch (error) {}
   };
   useEffect(() => {
     GoogleSignin.configure({
@@ -98,18 +111,12 @@ function Login({ navigation }: LoginScreenProps) {
     });
   }, []);
 
-
-
-
-
-
-useEffect(() => {
-    if(isAuthenticated){
-        navigation.navigate("MainTabs")
+  useEffect(() => {
+    if (uid) {
+      setAuthStatus(true);
+      navigation.navigate('MainTabs');
     }
-},[])
-
-
+  }, []);
 
   return (
     <KeyboardAvoidingView
@@ -211,14 +218,16 @@ useEffect(() => {
           </PressableScale>
         </View>
 
-   <Pressable className="flex absolute bottom-16" onPress={() => {
-setAuthStatus(true)
-navigation.navigate("MainTabs")
-   }} android_ripple={null}>
-        <Text className="color-[#111] text-xl font-semibold">
-          skip
-        </Text>
-</Pressable>
+        <Pressable
+          className="flex absolute bottom-16"
+          onPress={() => {
+            setAuthStatus(true);
+            navigation.navigate('MainTabs');
+          }}
+          android_ripple={null}
+        >
+          <Text className="color-[#111] text-xl font-semibold">skip</Text>
+        </Pressable>
       </View>
 
       {showOTPModal && (
@@ -230,7 +239,6 @@ navigation.navigate("MainTabs")
           onVerify={handleOTPVerify}
         />
       )}
-
     </KeyboardAvoidingView>
   );
 }

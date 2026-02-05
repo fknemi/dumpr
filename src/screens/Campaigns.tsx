@@ -1,10 +1,7 @@
-import { View, Text } from 'react-native'
+import { View, Text } from 'react-native';
 
 function Campaigns() {
-    return (
-        <View>
-        </View>
-    )
+  return <View></View>;
 }
 
-export default Campaigns
+export default Campaigns;

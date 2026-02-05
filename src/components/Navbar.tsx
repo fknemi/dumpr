@@ -9,7 +9,8 @@ import Ionicons from '@react-native-vector-icons/ionicons';
 import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import useLocation from '@/hooks/useLocation';
-
+import useUserStore from '@/stores/useUserStore';
+import { useEffect } from 'react';
 interface NavbarProps {
   navigation?: NativeStackHeaderProps['navigation'];
   name?: string | null;
@@ -26,6 +27,9 @@ function Navbar({
   location = 'Location',
 }: NavbarProps) {
   const { getCurrentLocation } = useLocation();
+  const user = useUserStore(state => state.user);
+  const uid = user?.uid; // Use optional chaining
+
   return (
     <>
       <StatusBar barStyle="dark-content" backgroundColor="white" />

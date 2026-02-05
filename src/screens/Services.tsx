@@ -13,6 +13,7 @@ import CategoryHeading from '@/components/CategoryHeading.tsx';
 import FeatureCard from '@/components/FeatureCard.tsx';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import ScheduleModal from '@/components/ScheduleModal';
+import BookModal from '@/components/BookModal';
 function Services() {
   const features = [
     {
@@ -23,25 +24,28 @@ function Services() {
       iconPath: require('../../assets/calendar-clock.png'),
       gradientPath: require('../../assets/green-gradient-blob.png'),
       color: 'rgba(74, 230, 74, 0.3)',
-            data: [
-              { id: 1, day: 'Monday', time: '8:00 AM', type: 'General Waste' },
-              { id: 2, day: 'Tuesday', time: '9:00 AM', type: 'Recyclables' },
-              { id: 3, day: 'Wednesday', time: '10:00 AM', type: 'Organic Waste' },
-              { id: 4, day: 'Thursday', time: '8:00 AM', type: 'General Waste' },
-              { id: 5, day: 'Friday', time: '2:00 PM', type: 'Recyclables' },
-              { id: 6, day: 'Saturday', time: '10:00 AM', type: 'Organic Waste' },
-              { id: 7, day: 'Sunday', time: '9:00 AM', type: 'General Waste' },
-            ],
+      offsetLeft: 'left-20',
+      data: [
+        { id: 1, day: 'Monday', time: '8:00 AM', type: 'General Waste' },
+        { id: 2, day: 'Tuesday', time: '9:00 AM', type: 'Recyclables' },
+        { id: 3, day: 'Wednesday', time: '10:00 AM', type: 'Organic Waste' },
+        { id: 4, day: 'Thursday', time: '8:00 AM', type: 'General Waste' },
+        { id: 5, day: 'Friday', time: '2:00 PM', type: 'Recyclables' },
+        { id: 6, day: 'Saturday', time: '10:00 AM', type: 'Organic Waste' },
+        { id: 7, day: 'Sunday', time: '9:00 AM', type: 'General Waste' },
+      ],
     },
     {
       type: 'book',
       title: 'Electric Waste Pickup',
-      subText: 'get rid of your electric waste',
-      btnText: 'Book a Pickup',
+      subText: 'Schedule pickup for electronic devices and appliances',
+      btnText: 'Book Now',
       iconPath: require('../../assets/ev-truck.png'),
       gradientPath: require('../../assets/blue-gradient-blob.png'),
       color: 'rgba(74, 124, 230, 0.3)',
-
+      offsetLeft: '-right-[80%] -bottom-1',
+      offsetBlob: ' -right-14 ',
+      data: [],
     },
     {
       type: 'book',
@@ -51,11 +55,13 @@ function Services() {
       iconPath: require('../../assets/truck.png'),
       gradientPath: require('../../assets/purple-gradient-blob.png'),
       color: 'rgba(196, 187, 245, 1)',
-      offsetLeft: '-right-32 -mb-[0.5vh]',
+      offsetLeft: 'left-12 -mb-[0.5vh]',
+      data: [],
     },
   ];
 
   const [showScheduleModal, setShowScheduleModal] = useState(false);
+  const [showBookModal, setShowBookModal] = useState(false);
   const [modalData, setModalData] = useState({});
 
   return (
@@ -87,6 +93,8 @@ function Services() {
                     setShowScheduleModal(true);
                     break;
                   case 'book':
+                    setModalData(feature.data);
+                    setShowBookModal(true);
                     break;
                   default:
                     break;
@@ -102,6 +110,14 @@ function Services() {
             data={modalData}
             visible={showScheduleModal}
             onClose={() => setShowScheduleModal(false)}
+          />
+        )}
+
+        {showBookModal && (
+          <BookModal
+            data={modalData}
+            visible={showBookModal}
+            onClose={() => setShowBookModal(false)}
           />
         )}
       </View>

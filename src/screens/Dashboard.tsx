@@ -1,10 +1,7 @@
-import { View, Text } from 'react-native'
+import { View, Text } from 'react-native';
 
 function Dashboard() {
-    return (
-        <View>
-        </View>
-    )
+  return <View></View>;
 }
 
-export default Dashboard
+export default Dashboard;

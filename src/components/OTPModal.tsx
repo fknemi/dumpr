@@ -11,7 +11,7 @@ import {
   InteractionManager,
 } from 'react-native';
 import Ionicons from '@react-native-vector-icons/ionicons';
-import auth from '@react-native-firebase/auth'; // Re-added Firebase
+import auth from '@react-native-firebase/auth';
 
 interface OTPModalProps {
   visible: boolean;
@@ -30,18 +30,18 @@ const OTPModal = ({
 }: OTPModalProps) => {
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [timer, setTimer] = useState(60);
-  const [confirmation, setConfirmation] = useState<any>(null); // Firebase confirmation result
+  const [confirmation, setConfirmation] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
   const inputRefs = useRef<(TextInput | null)[]>([]);
 
-  // 1. Send OTP via Firebase on mount
   useEffect(() => {
     const sendOTP = async () => {
       if (visible && phoneNumber) {
         setIsLoading(true);
         try {
           const fullPhoneNumber = `+${callingCode}${phoneNumber}`;
-          const confirmationResult = await auth().signInWithPhoneNumber(fullPhoneNumber);
+          const confirmationResult =
+            await auth().signInWithPhoneNumber(fullPhoneNumber);
           setConfirmation(confirmationResult);
         } catch (error: any) {
           Alert.alert('Error', error.message || 'Failed to send OTP.');
@@ -60,7 +60,6 @@ const OTPModal = ({
     }
   }, [visible, phoneNumber, callingCode]);
 
-  // 2. Timer logic
   useEffect(() => {
     if (timer > 0 && visible) {
       const interval = setInterval(() => setTimer(prev => prev - 1), 1000);
@@ -88,22 +87,17 @@ const OTPModal = ({
     }
   };
 
-  // 3. Firebase Verification Logic
   const handleVerify = async (otpCode?: string) => {
     const code = otpCode || otp.join('');
     if (code.length === 6 && confirmation) {
       setIsLoading(true);
       try {
         const userCredential = await confirmation.confirm(code);
-        
-        // SUCCESS: Close modal first to clean up UI
         onClose();
-        
-        // WAIT for Modal & Keyboard to clear before triggering navigation
+
         InteractionManager.runAfterInteractions(() => {
           onVerify(userCredential);
         });
-        
       } catch (error: any) {
         Alert.alert('Error', 'Invalid verification code.');
         setOtp(['', '', '', '', '', '']);
@@ -118,7 +112,8 @@ const OTPModal = ({
     setIsLoading(true);
     try {
       const fullPhoneNumber = `+${callingCode}${phoneNumber}`;
-      const confirmationResult = await auth().signInWithPhoneNumber(fullPhoneNumber);
+      const confirmationResult =
+        await auth().signInWithPhoneNumber(fullPhoneNumber);
       setConfirmation(confirmationResult);
       setTimer(60);
       Alert.alert('Success', 'OTP resent.');
@@ -130,12 +125,24 @@ const OTPModal = ({
   };
 
   return (
-    <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
+    <Modal
+      visible={visible}
+      transparent
+      animationType="fade"
+      onRequestClose={onClose}
+    >
       <Pressable className="flex-1 justify-end bg-black/50" onPress={onClose}>
-        <Pressable className="bg-white rounded-t-3xl p-6 min-h-[450px]" onPress={e => e.stopPropagation()}>
+        <Pressable
+          className="bg-white rounded-t-3xl p-6 min-h-[450px]"
+          onPress={e => e.stopPropagation()}
+        >
           <View className="items-center mb-8 mt-4">
-            <Text className="text-2xl font-bold text-slate-900">Verify OTP</Text>
-            <Text className="text-slate-500">+{callingCode} {phoneNumber}</Text>
+            <Text className="text-2xl font-bold text-slate-900">
+              Verify OTP
+            </Text>
+            <Text className="text-slate-500">
+              +{callingCode} {phoneNumber}
+            </Text>
           </View>
 
           <View className="flex-row justify-between mb-8 px-2">
@@ -159,12 +166,14 @@ const OTPModal = ({
             disabled={isLoading || otp.some(d => d === '')}
             className={`w-full h-14 rounded-xl justify-center items-center ${isLoading ? 'bg-slate-300' : 'bg-blue-500'}`}
           >
-            <Text className="text-white font-bold">{isLoading ? 'Verifying...' : 'Verify OTP'}</Text>
+            <Text className="text-white font-bold">
+              {isLoading ? 'Verifying...' : 'Verify OTP'}
+            </Text>
           </TouchableOpacity>
 
           <View className="items-center mt-6">
             {timer > 0 ? (
-               <Text className="text-slate-500">Resend in {timer}s</Text>
+              <Text className="text-slate-500">Resend in {timer}s</Text>
             ) : (
               <TouchableOpacity onPress={handleResend} disabled={isLoading}>
                 <Text className="text-blue-500 font-semibold">Resend OTP</Text>

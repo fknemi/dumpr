@@ -8,12 +8,13 @@ interface ProfilePageProps {
 }
 
 function ProfilePage({ navigation }: ProfilePageProps) {
-  const uid = useUserStore(state => state.uid);
+  const user = useUserStore(state => state.user);
+
   const setAuthStatus = useAuthStore(state => state.setAuthStatus);
 
   return (
     <View>
-      {uid ? (
+      {user ? (
         <></>
       ) : (
         <View className="flex flex-col w-full h-[60vh] items-center justify-center gap-24">

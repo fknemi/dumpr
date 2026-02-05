@@ -1,23 +1,27 @@
-import { View, Text, Linking, Pressable } from 'react-native';
+import { View, Text, Linking, Pressable, Alert } from 'react-native';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import { CampaignCardParams } from '@/types/index.ts';
-const openLink = async url => {
+
+const openLink = async (url: string) => {
   console.log('Attempting to open:', url);
   try {
-    const supported = await Linking.canOpenURL(url);
-    console.log('Can open URL?', supported);
-    if (supported) {
-      console.log('Opening URL...');
+    if (url.startsWith('http://') || url.startsWith('https://')) {
       await Linking.openURL(url);
-      console.log('URL opened successfully');
     } else {
-      console.log("Can't open URL:", url);
+      const supported = await Linking.canOpenURL(url);
+      if (supported) {
+        await Linking.openURL(url);
+      } else {
+        Alert.alert('Error', 'Unable to open this link');
+      }
     }
   } catch (err) {
-    console.error('Error details:', err);
+    console.error(err);
+    Alert.alert('Error', 'Failed to open the link. Please try again.');
   }
 };
+
 function CampaignCard({
   title,
   subText,

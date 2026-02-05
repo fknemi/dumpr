@@ -1,10 +1,7 @@
-import { View, Text } from 'react-native'
+import { View, Text } from 'react-native';
 
-function Schedule  () {
-  return (
-    <View>
-    </View>
-  )
+function Schedule() {
+  return <View></View>;
 }
 
-export default Schedule
+export default Schedule;

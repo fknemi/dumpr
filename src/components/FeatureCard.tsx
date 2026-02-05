@@ -14,6 +14,7 @@ function FeatureCard({
   gradientPath,
   color,
   offsetLeft,
+  offsetBlob,
   onBtnPress,
 }: FeatureCardProps) {
   return (
@@ -35,7 +36,10 @@ function FeatureCard({
         </Pressable>
       </View>
       <View className="relative">
-        <Image className="absolute bottom-[-20%]" source={gradientPath} />
+        <Image
+          className={`absolute bottom-[-20%] ${offsetBlob || ''}`}
+          source={gradientPath}
+        />
         <Image
           className={`absolute bottom-[5%] ${offsetLeft || 'left-24'}`}
           source={iconPath}

@@ -14,6 +14,7 @@ export interface FeatureCardParams {
   gradientPath: string;
   color: string;
   offsetLeft?: string;
+  offsetBlob?: string;
   onBtnPress: (type: string) => void;
 }
 

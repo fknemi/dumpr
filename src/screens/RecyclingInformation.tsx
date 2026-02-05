@@ -1,10 +1,7 @@
-import { View, Text } from 'react-native'
+import { View, Text } from 'react-native';
 
 function RecyclingInformation() {
-    return (
-        <View>
-        </View>
-    )
+  return <View></View>;
 }
 
-export default RecyclingInformation
+export default RecyclingInformation;

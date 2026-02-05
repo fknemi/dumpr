@@ -171,9 +171,7 @@ function Registration({ navigation }: RegistrationScreenProps) {
                   visible={showCountryPicker}
                   onClose={() => setShowCountryPicker(false)}
                 />
-                <Text className="text-sm font-medium ml-1">
-                  +{callingCode}
-                </Text>
+                <Text className="text-sm font-medium ml-1">+{callingCode}</Text>
                 <Ionicons
                   name="chevron-down"
                   size={14}

@@ -20,16 +20,16 @@ interface UserState {
 
 const useUserStore = create<UserState>()(
   persist(
-    (set) => ({
+    set => ({
       user: null,
-      setUser: (user) => set({ user }),
+      setUser: user => set({ user }),
       clearUser: () => set({ user: null }),
     }),
     {
       name: 'user-storage',
       storage: createJSONStorage(() => AsyncStorage),
-    }
-  )
+    },
+  ),
 );
 
-export default useUserStore
+export default useUserStore;

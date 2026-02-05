@@ -1,10 +1,7 @@
-import { View, Text } from 'react-native'
+import { View, Text } from 'react-native';
 
-function Tickets  () {
-  return (
-    <View>
-    </View>
-  )
+function Tickets() {
+  return <View></View>;
 }
 
-export default Tickets
+export default Tickets;
