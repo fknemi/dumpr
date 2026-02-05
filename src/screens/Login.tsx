@@ -98,6 +98,19 @@ function Login({ navigation }: LoginScreenProps) {
     });
   }, []);
 
+
+
+
+
+
+useEffect(() => {
+    if(isAuthenticated){
+        navigation.navigate("MainTabs")
+    }
+},[])
+
+
+
   return (
     <KeyboardAvoidingView
       className="flex-1"
@@ -197,6 +210,15 @@ function Login({ navigation }: LoginScreenProps) {
             </View>
           </PressableScale>
         </View>
+
+   <Pressable className="flex absolute bottom-16" onPress={() => {
+setAuthStatus(true)
+navigation.navigate("MainTabs")
+   }} android_ripple={null}>
+        <Text className="color-[#111] text-xl font-semibold">
+          skip
+        </Text>
+</Pressable>
       </View>
 
       {showOTPModal && (
@@ -208,6 +230,7 @@ function Login({ navigation }: LoginScreenProps) {
           onVerify={handleOTPVerify}
         />
       )}
+
     </KeyboardAvoidingView>
   );
 }

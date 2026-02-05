@@ -1,17 +1,19 @@
 import { View, Text, Image, Pressable } from 'react-native';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import useAuthStore from '@/stores/useAuthStore';
+import useUserStore from '@/stores/useUserStore';
 
 interface ProfilePageProps {
   navigation?: NativeStackHeaderProps['navigation'];
 }
 
 function ProfilePage({ navigation }: ProfilePageProps) {
-  const isAuthenticated = useAuthStore(state => state.isAuthenticated);
+  const uid = useUserStore(state => state.uid);
+  const setAuthStatus = useAuthStore(state => state.setAuthStatus);
 
   return (
     <View>
-      {isAuthenticated ? (
+      {uid ? (
         <></>
       ) : (
         <View className="flex flex-col w-full h-[60vh] items-center justify-center gap-24">
@@ -23,7 +25,10 @@ function ProfilePage({ navigation }: ProfilePageProps) {
           </View>
           <View className="flex flex-row gap-8 iitems-center justify-center">
             <Pressable
-              onPress={() => navigation.navigate('Login')}
+              onPress={() => {
+                setAuthStatus(false);
+                navigation.navigate('Login');
+              }}
               className="flex flex-row gap-8 items-center justify-center border-[1.5px] border-[#16161726] px-4 py-2 rounded-lg"
             >
               <Text className="text-lg font-rethink-semibold">Login</Text>
@@ -31,7 +36,10 @@ function ProfilePage({ navigation }: ProfilePageProps) {
             </Pressable>
 
             <Pressable
-              onPress={() => navigation.navigate('Registration')}
+              onPress={() => {
+                setAuthStatus(false);
+                navigation.navigate('Registration');
+              }}
               className="flex flex-row gap-8 items-center justify-center border-[1.5px] border-[#16161726] px-4 py-2 rounded-lg"
             >
               <Text className="text-lg font-rethink-semibold">Register</Text>

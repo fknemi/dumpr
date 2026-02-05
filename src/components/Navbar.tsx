@@ -40,12 +40,10 @@ function Navbar({
                 <Ionicons name="arrow-back" size={28} color="#fff" />
               </TouchableOpacity>
             )}
-            {name && (
-              <View className="flex flex-row items-center justify-center gap-2">
-                <Text className="text-2xl font-semibold ">Hi {name} </Text>
-                <Text className="text-4xl">🖐️</Text>
-              </View>
-            )}
+            <View className="flex flex-row items-center justify-center gap-2">
+              <Text className="text-2xl font-semibold ">Hi {name} </Text>
+              <Text className="text-4xl">🖐️</Text>
+            </View>
           </View>
 
           {showLocation && (

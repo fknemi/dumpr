@@ -5,6 +5,8 @@ export interface TabIcon {
 }
 
 export interface FeatureCardParams {
+  type: string;
+  data: object | any[];
   title: string;
   subText: string;
   btnText: string;
@@ -12,6 +14,7 @@ export interface FeatureCardParams {
   gradientPath: string;
   color: string;
   offsetLeft?: string;
+  onBtnPress: (type: string) => void;
 }
 
 export interface CategoryHeadingParams {

@@ -37,6 +37,7 @@ import CustomTabBar from '@/components/CustomTabBar';
 // Store Imports
 import useLocationStore from '@/stores/useLocationStore.tsx';
 import useAuthStore from '@/stores/useAuthStore';
+import useUserStore from '@/stores/useUserStore';
 
 // Type Imports
 import { RootStackParamList, TabParamList } from '@/types/index';
@@ -68,6 +69,7 @@ const icons: TabIcon[] = [
 // Protected Routes (Tab Navigator)
 function MainTabs() {
   const city = useLocationStore(state => state.city);
+  const username = useUserStore(state => state.username);
 
   return (
     <Tab.Navigator
@@ -77,7 +79,7 @@ function MainTabs() {
         header: props => (
           <Navbar
             {...props}
-            name={props.route.name}
+            name={username || ''}
             location={city}
             showBackButton={false}
             showLocation={true}
@@ -122,46 +124,48 @@ function MainTabs() {
 export default function App() {
   const city = useLocationStore(state => state.city);
   const isAuthenticated = useAuthStore(state => state.isAuthenticated);
+  const username = useUserStore(state => state.username);
 
   return (
     <SafeAreaProvider>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="Login"
+            initialRouteName={isAuthenticated ? 'MainTabs' : 'Login'}
             screenOptions={{
               contentStyle: { backgroundColor: '#FFFFFF' },
             }}
           >
-            {!isAuthenticated ? (
-              // Authentication Stack
+            {/* Auth Screens - Always Available */}
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{
+                headerShown: false,
+                animationTypeForReplace: 'push',
+              }}
+            />
+            <Stack.Screen
+              name="Registration"
+              component={Registration}
+              options={{
+                headerShown: false,
+                animationTypeForReplace: 'push',
+              }}
+            />
+
+            {/* Main Tabs - Always Available (handles auth check internally in ProfilePage) */}
+            <Stack.Screen
+              name="MainTabs"
+              component={MainTabs}
+              options={{
+                headerShown: false,
+              }}
+            />
+
+            {/* Protected Routes - Only Available When Authenticated */}
+            {isAuthenticated && (
               <>
-                <Stack.Screen
-                  name="Login"
-                  component={Login}
-                  options={{
-                    headerShown: false,
-                    animationTypeForReplace: 'push',
-                  }}
-                />
-                <Stack.Screen
-                  name="Registration"
-                  component={Registration}
-                  options={{
-                    headerShown: false,
-                  }}
-                />
-              </>
-            ) : (
-              // Authenticated Stack
-              <>
-                <Stack.Screen
-                  name="MainTabs"
-                  component={MainTabs}
-                  options={{
-                    headerShown: false,
-                  }}
-                />
                 <Stack.Screen
                   name="Campaign"
                   component={Campaign}
@@ -218,10 +222,10 @@ export default function App() {
                     header: props => (
                       <Navbar
                         {...props}
-                        name="Services"
+                        name={username || ''}
                         location={city}
                         showBackButton={true}
-                        showLocation={true}
+                        showLocation={false}
                       />
                     ),
                   }}

@@ -6,13 +6,15 @@ interface FeatureCardProps {
 }
 
 function FeatureCard({
+  type,
   title,
   subText,
   btnText,
   iconPath,
   gradientPath,
   color,
-  offsetLeft
+  offsetLeft,
+  onBtnPress,
 }: FeatureCardProps) {
   return (
     <View
@@ -27,13 +29,17 @@ function FeatureCard({
         <Pressable
           className="w-[40vw] flex items-center justify-center rounded-lg px-2 py-3"
           style={{ backgroundColor: 'rgba(17, 17, 17, 0.8)' }}
+          onPress={() => onBtnPress(type)}
         >
           <Text className="text-xl text-white font-medium">{btnText}</Text>
         </Pressable>
       </View>
       <View className="relative">
         <Image className="absolute bottom-[-20%]" source={gradientPath} />
-        <Image className={`absolute bottom-[5%] ${offsetLeft || "left-24"}`}  source={iconPath} />
+        <Image
+          className={`absolute bottom-[5%] ${offsetLeft || 'left-24'}`}
+          source={iconPath}
+        />
       </View>
     </View>
   );
