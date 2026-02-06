@@ -22,6 +22,7 @@ function Home({ navigation }: { navigation: LoginScreenNavigationProp }) {
   const [showBookModal, setShowBookModal] = useState(false);
   const [modalData, setModalData] = useState({});
   const [bookingData, setBookingData] = useState<{
+    title: string;
     day: string;
     time: string;
     frequency: 'daily' | 'weekly' | 'monthly';
@@ -97,6 +98,7 @@ function Home({ navigation }: { navigation: LoginScreenNavigationProp }) {
   ];
 
   const handleBookingConfirm = (booking: {
+    title: string;
     day: string;
     time: string;
     frequency: 'daily' | 'weekly' | 'monthly';
@@ -137,7 +139,7 @@ function Home({ navigation }: { navigation: LoginScreenNavigationProp }) {
                     if (!user) {
                       return navigation.navigate('Login');
                     }
-                    setModalData(feature.data);
+                    setModalData(feature.title);
                     setShowBookModal(true);
                     break;
                   default:
@@ -178,6 +180,7 @@ function Home({ navigation }: { navigation: LoginScreenNavigationProp }) {
 
         {showBookModal && (
           <BookModal
+            title={modalData}
             visible={showBookModal}
             onClose={() => setShowBookModal(false)}
             onConfirm={handleBookingConfirm}

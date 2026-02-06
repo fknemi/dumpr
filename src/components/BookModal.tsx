@@ -11,13 +11,14 @@ import Ionicons from '@react-native-vector-icons/ionicons';
 import useSchedulesStore from '@/stores/useSchedulesStore';
 
 interface BookModalProps {
+  title: string;
   visible: boolean;
   onClose: () => void;
 }
 
 type FrequencyType = 'daily' | 'weekly' | 'monthly';
 
-function BookModal({ visible, onClose }: BookModalProps) {
+function BookModal({ title, visible, onClose }: BookModalProps) {
   const [selectedDay, setSelectedDay] = useState<string>('');
   const [selectedTime, setSelectedTime] = useState<string>('');
   const [showDayDropdown, setShowDayDropdown] = useState(false);
@@ -53,12 +54,12 @@ function BookModal({ visible, onClose }: BookModalProps) {
   const handleBook = () => {
     if (selectedDay && selectedTime) {
       addBooking({
+        title: title,
         day: selectedDay,
         time: selectedTime,
         frequency: frequency,
       });
 
-      // Reset form
       setSelectedDay('');
       setSelectedTime('');
       setFrequency('daily');

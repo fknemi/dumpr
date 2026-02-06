@@ -93,7 +93,7 @@ function Services() {
                     setShowScheduleModal(true);
                     break;
                   case 'book':
-                    setModalData(feature.data);
+                    setModalData(feature.title);
                     setShowBookModal(true);
                     break;
                   default:
@@ -115,7 +115,7 @@ function Services() {
 
         {showBookModal && (
           <BookModal
-            data={modalData}
+            title={modalData}
             visible={showBookModal}
             onClose={() => setShowBookModal(false)}
           />
